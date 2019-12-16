@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-public class HoverFontColorAnimation : HoverEventAnimation
+public class HoverImageColorAnimation : HoverEventAnimation
 {
     [SerializeField]
-    //private Text m_Text = null;
-    private TextMeshProUGUI m_Text = null;
+    private Image m_Image = null;
 
     [SerializeField]
     private Color m_TargetColor     = Color.white;
@@ -18,11 +16,11 @@ public class HoverFontColorAnimation : HoverEventAnimation
     protected override IEnumerator EHoverBegin()
     {
         float _time = 0f;
-        m_Color = m_Text.color;
+        m_Color = m_Image.color;
         do
         {
             _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, 1f);
-            m_Text.color = Color.Lerp(m_Color, m_TargetColor, _time);
+            m_Image.color = Color.Lerp(m_Color, m_TargetColor, _time);
             yield return null;
         } while (_time != m_AnimationTime);
     }
@@ -30,35 +28,34 @@ public class HoverFontColorAnimation : HoverEventAnimation
     protected override IEnumerator EHoverEnd()
     {
         float _time = 0f;
-        m_Color = m_Text.color;
+        m_Color = m_Image.color;
         do
         {
             _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, 1f);
-            m_Text.color = Color.Lerp(m_Color, m_DefaultColor, _time);
+            m_Image.color = Color.Lerp(m_Color, m_DefaultColor, _time);
             yield return null;
         } while (_time != m_AnimationTime);
     }
 
     protected override bool Initialize()
     {
-        if(null == m_Text)
+        if(null == m_Image)
         {
-            //m_Text = GetComponentInChildren<Text>();
-            m_Text = GetComponentInChildren<TextMeshProUGUI>();
+            m_Image = GetComponentInChildren<Image>();
 
-            if(null == m_Text)
+            if(null == m_Image)
             {
                 return false;
             }
         }
 
-        m_DefaultColor = m_Text.color;
+        m_DefaultColor = m_Image.color;
         return true;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        m_Text.color = m_DefaultColor;
+        m_Image.color = m_DefaultColor;
     }
 }
