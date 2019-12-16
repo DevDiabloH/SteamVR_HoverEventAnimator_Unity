@@ -1,4 +1,4 @@
-# SteamVR_HoverEventAnimator_Unity
+# SteamVR_HoverEventExtends_Unity
 Extends the Hover Event based on SteamVR.
 
 Available in SteamVR or 2d Debug Mode.
