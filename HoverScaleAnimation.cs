@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HoverScaleAnimation : HoverEventAnimation
 {
-    public float upScaleSize = 1.3f;
+    public float hoveredScaleSize = 1.3f;
 
     private Vector3 m_Scale         = Vector3.one;
     private Vector3 m_UpScaleSize   = Vector3.one;
@@ -16,7 +16,7 @@ public class HoverScaleAnimation : HoverEventAnimation
         m_Scale = this.transform.localScale;
         do
         {
-            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, 1f);
+            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, m_AnimationTime);
             this.transform.localScale = Vector3.Lerp(m_Scale, m_UpScaleSize, _time);
             yield return null;
         } while (_time != m_AnimationTime);
@@ -28,7 +28,7 @@ public class HoverScaleAnimation : HoverEventAnimation
         m_Scale = this.transform.localScale;
         do
         {
-            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, 1f);
+            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, m_AnimationTime);
             this.transform.localScale = Vector3.Lerp(m_Scale, m_DefaultSize, _time);
             yield return null;
         } while (_time != m_AnimationTime);
@@ -37,7 +37,7 @@ public class HoverScaleAnimation : HoverEventAnimation
     protected override bool Initialize()
     {
         m_DefaultSize = this.transform.localScale;
-        m_UpScaleSize = m_DefaultSize * upScaleSize;
+        m_UpScaleSize = m_DefaultSize * hoveredScaleSize;
         return true;
     }
 

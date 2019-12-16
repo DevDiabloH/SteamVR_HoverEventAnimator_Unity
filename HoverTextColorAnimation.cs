@@ -5,15 +5,14 @@ using TMPro;
 
 public class HoverTextColorAnimation : HoverEventAnimation
 {
+    public Color hoveredTextColor = Color.white;
+
+    private Color m_Color = Color.white;
+    private Color m_DefaultColor = Color.white;
+
     [SerializeField]
     //private Text m_Text = null;
     private TextMeshProUGUI m_Text = null;
-
-    [SerializeField]
-    private Color m_TargetColor     = Color.white;
-
-    private Color m_Color           = Color.white;
-    private Color m_DefaultColor    = Color.white;
 
     protected override IEnumerator EHoverBegin()
     {
@@ -21,8 +20,8 @@ public class HoverTextColorAnimation : HoverEventAnimation
         m_Color = m_Text.color;
         do
         {
-            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, 1f);
-            m_Text.color = Color.Lerp(m_Color, m_TargetColor, _time);
+            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, m_AnimationTime);
+            m_Text.color = Color.Lerp(m_Color, hoveredTextColor, _time);
             yield return null;
         } while (_time != m_AnimationTime);
     }
@@ -33,7 +32,7 @@ public class HoverTextColorAnimation : HoverEventAnimation
         m_Color = m_Text.color;
         do
         {
-            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, 1f);
+            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, m_AnimationTime);
             m_Text.color = Color.Lerp(m_Color, m_DefaultColor, _time);
             yield return null;
         } while (_time != m_AnimationTime);

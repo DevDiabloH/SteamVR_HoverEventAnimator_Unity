@@ -4,14 +4,12 @@ using UnityEngine.UI;
 
 public class HoverImageColorAnimation : HoverEventAnimation
 {
-    [SerializeField]
-    private Image m_Image = null;
-
-    [SerializeField]
-    private Color m_TargetColor     = Color.white;
-
+    public Color hoveredColor       = Color.white;
     private Color m_Color           = Color.white;
     private Color m_DefaultColor    = Color.white;
+
+    [SerializeField]
+    private Image m_Image = null;
 
     protected override IEnumerator EHoverBegin()
     {
@@ -19,8 +17,8 @@ public class HoverImageColorAnimation : HoverEventAnimation
         m_Color = m_Image.color;
         do
         {
-            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, 1f);
-            m_Image.color = Color.Lerp(m_Color, m_TargetColor, _time);
+            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, m_AnimationTime);
+            m_Image.color = Color.Lerp(m_Color, hoveredColor, _time);
             yield return null;
         } while (_time != m_AnimationTime);
     }
@@ -31,7 +29,7 @@ public class HoverImageColorAnimation : HoverEventAnimation
         m_Color = m_Image.color;
         do
         {
-            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, 1f);
+            _time = Mathf.Clamp(_time + (Time.deltaTime * m_Multiplier), 0f, m_AnimationTime);
             m_Image.color = Color.Lerp(m_Color, m_DefaultColor, _time);
             yield return null;
         } while (_time != m_AnimationTime);
